@@ -1,15 +1,24 @@
-pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine' 
-            args '-p 3000:3000' 
+node {
+    def app
+    stage('Clone Repository') {
+        checkout scm
+    }
+
+    stage('Build Image') {
+        app = docker.build("lovetwocode/react-docker-jenkins")
+    }
+
+    stage('Test Image') {
+        app.inside {
+            echo "Test passed"
         }
     }
-    stages {
-        stage('Build') { 
-            steps {
-                sh 'npm install' 
-            }
+
+    stage('Push Image') {
+        docker.withRegistry("https://hub.docker.com", "docker-hub") {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
         }
+        echo "Trying to push docker build to dockerhub"
     }
 }
