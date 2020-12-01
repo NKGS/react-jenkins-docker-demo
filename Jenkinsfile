@@ -15,10 +15,14 @@ node {
     }
 
     stage('Push Image') {
-        docker.withRegistry("https://hub.docker.com", "docker-hub") {
+        withDockerRegistry([ credentialsId: "docker-hub", url: "" ]) {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
+        // docker.withRegistry("https://hub.docker.com", "docker-hub") {
+        //     app.push("${env.BUILD_NUMBER}")
+        //     app.push("latest")
+        // }
         echo "Trying to push docker build to dockerhub"
     }
 }
