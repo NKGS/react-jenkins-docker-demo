@@ -16,8 +16,9 @@ node {
 
     stage('Push Image') {
         withDockerRegistry([ credentialsId: "docker-hub", url: "" ]) {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+            // app.push("${env.BUILD_NUMBER}")
+            // app.push("latest")
+            app.push("lovetwocode/react-docker-jenkins:latest")
         }
         echo "Trying to push docker build to dockerhub"
     }
