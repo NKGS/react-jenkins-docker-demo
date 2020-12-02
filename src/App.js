@@ -9,14 +9,9 @@ function App() {
         <p>
           Welcome to test!!
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Welcommmeeeee to the demooooooo of Jenkins Docker Webhook!!!!
-        </a>
+        <p>
+          Please work fine.. do not irritate!!
+        </p>
       </header>
     </div>
   );
