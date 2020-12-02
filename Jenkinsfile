@@ -1,28 +1,45 @@
-node {
-    def app
-    stage('Clone Repository') {
-        checkout scm
-    }
+// node {
+//     def app
+//     stage('Clone Repository') {
+//         checkout scm
+//     }
 
-    stage('Build Image') {
-        app = docker.build("lovetwocode/react-docker-jenkins")
-    }
+//     stage('Build Image') {
+//         app = docker.build("lovetwocode/react-docker-jenkins")
+//     }
 
-    stage('Test Image') {
-        app.inside {
-            echo "Test passed"
-        }
-    }
+//     stage('Test Image') {
+//         app.inside {
+//             echo "Test passed"
+//         }
+//     }
 
-    stage('Push Image') {
+//     stage('Push Image') {
+//         withDockerRegistry([ credentialsId: "docker-hub", url: "" ]) {
+//             app.push("${env.BUILD_NUMBER}")
+//             app.push("latest")
+//         }
+//         echo "Trying to push docker build to dockerhub"
+//     }
+// }
+
+pipeline {
+  agent { label 'docker' } 
+  stages {
+    stage('Build') {
+      steps {
+        sh docker build . -t "lovetwocode/react-docker-jenkins"
+      }
+    }
+    stage('Publish') {
+      when {
+        branch 'main'
+      }
+      steps {
         withDockerRegistry([ credentialsId: "docker-hub", url: "" ]) {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+          sh 'docker push lovetwocode/react-docker-jenkins'
         }
-        // docker.withRegistry("https://hub.docker.com", "docker-hub") {
-        //     app.push("${env.BUILD_NUMBER}")
-        //     app.push("latest")
-        // }
-        echo "Trying to push docker build to dockerhub"
+      }
     }
+  }
 }
