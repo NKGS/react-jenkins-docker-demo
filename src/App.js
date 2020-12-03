@@ -10,7 +10,7 @@ function App() {
           Welcome to test!!
         </p>
         <p>
-          Test completed.
+          Test completed successfully!!
         </p>
       </header>
     </div>
