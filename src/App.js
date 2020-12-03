@@ -10,7 +10,7 @@ function App() {
           Welcome to test!!
         </p>
         <p>
-          Finallyyyy it is done. Auto build testing!!
+          Auto build testing!! And it works fine :)
         </p>
       </header>
     </div>
